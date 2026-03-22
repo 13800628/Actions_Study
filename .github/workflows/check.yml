@@ -22,7 +22,7 @@ jobs:
         run: npm install
 
       - name: Type Check
-        run: npm run type-check # TypeScriptの型エラーがないかチェック
+        run: npx tsc --noEmit # TypeScriptの型エラーがないかチェック
 
       - name: Build Check
         run: npm run build # 本番用にビルドできるかチェック
