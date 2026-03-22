@@ -1,0 +1,28 @@
+name: Quality Check
+
+on: 
+  push:
+    branches: [ main ] # mainブランチにプッシュされた時に実行
+  pull_request:
+    branches: [ main ] # プルリクエストが作られた時も実行
+
+jobs:
+  build-and-check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4 # リポジトリからコードを持ってくる
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm' # インストールを速くする魔法
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Type Check
+        run: npm run type-check # TypeScriptの型エラーがないかチェック
+
+      - name: Build Check
+        run: npm run build # 本番用にビルドできるかチェック
